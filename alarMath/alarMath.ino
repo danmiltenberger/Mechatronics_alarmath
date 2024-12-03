@@ -6,23 +6,38 @@
 const byte ROWS = 4;
 const byte COLS = 4;
 
-// note that this is a rough workaround for issues with the rows and columns, the keypad 
-// doesn't actually look like this. BUT! It works and that's good enough for a school project
+// when you're good you're good dude
 char hexaKeys[ROWS][COLS] = {
-  {'1', '4', '7', '*'},
-  {'2', '5', '8', '0'},
-  {'3', '6', '9', '#'},
-  {'A', 'B', 'C', 'D'}
+ {'1', '2', '3', 'A'},
+ {'4', '5', '6', 'B'},
+ {'7', '8', '9', 'C'},
+ {'*', '0', '#', 'D'}
 };
-byte colPins[ROWS] = {44, 46, 48, 50}; 
-byte rowPins[COLS] = {45, 47, 49, 51}; 
+
+// in order from left  to right:
+byte r1 = 31; // red
+byte r2 = 33; // orange
+byte r3 = 35; // yellow
+byte r4 = 37; // green
+byte c1 = 39; // blue
+byte c2 = 41; // purple
+byte c3 = 43; // white
+byte c4 = 45; // black
+
+byte colPins[COLS] = {c1, c2, c3, c4}; 
+byte rowPins[ROWS] = {r1, r2, r3, r4}; 
 
 // create instance of the Keypad class with the keys, pins, rows, columns defined above
 Keypad keypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS); 
 
 
 // LCD Setup
-const int rs = 2, en = 3, d4 = 4, d5 = 5, d6 = 6, d7 = 7;
+const int rs = 2; // blue
+const int en = 3; // yellow
+const int d4 = 4; // orange
+const int d5 = 5; // brown
+const int d6 = 6; // orange
+const int d7 = 7; // purple
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 
@@ -52,7 +67,7 @@ typedef struct {
 
 
 // Buzzer setup
-const int buzzer = 13; 
+const int buzzer = 13; // white
 
 
 /**
@@ -71,6 +86,7 @@ bool show_eqn_get_user_answer(EquationResult eq, int num_correct, int num_correc
     char key = keypad.getKey();
     
     if (key) {
+      Serial.print(key);
       if (key >= '0' && key <= '9') {
         // If a number key is pressed, add it to the input
         addDigit(key, input);
@@ -161,7 +177,7 @@ void alarmNoise(int delay_ms) {
 
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print("press btn to snz");
+  lcd.print("hold btn to snz");
 
   while(true){
     tone(buzzer, 1000);     // Send 1KHz sound signal...
@@ -249,5 +265,3 @@ void loop() {
   //   }
   // }
 }
-
-
