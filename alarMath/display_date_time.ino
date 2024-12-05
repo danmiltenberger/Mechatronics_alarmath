@@ -4,6 +4,7 @@
 // https://github.com/PaulStoffregen/Time
 
 
+// write the current time str (line 1) and alarm str (line 2) to the 16x2 LCD display
 void write_date_time_to_display(String alarm_str) {
   // Clear the LCD
   lcd.clear();
@@ -27,18 +28,22 @@ void write_date_time_to_display(String alarm_str) {
 }
 
 
+// read the RTC and return the current time as a big number of seconds
 int get_current_time(){
-  int current_time_sec = hour()*60*60 + minute()*60 + second();
+  int current_time_sec = rtc.now().hour()*60*60 + rtc.now().minute()*60 + rtc.now().second();
   return current_time_sec;
 }
 
+
 String formatDate() {
   // formatted to standard ISO YYYY-MM-DD
-  return String(year()) + "-" + String(month()) + "-" + String(day());
+  // updated to use the RTC
+  return String(rtc.now().year()) + "-" + String(rtc.now().month()) + "-" + String(rtc.now().day());
 }
 
 String formatTime() {
-  return "Now: " + formatDigits(hour()) + ":" + formatDigits(minute()) + ":" + formatDigits(second());
+  // updated to use the RTC
+  return "Now: " + formatDigits(rtc.now().hour()) + ":" + formatDigits(rtc.now().minute()) + ":" + formatDigits(rtc.now().second());
 }
 
 String formatDigits(int digits) {

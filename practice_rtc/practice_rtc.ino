@@ -1,5 +1,5 @@
-#include <Wire.h>
-#include "DS3231.h"
+#include <config.h>
+#include <ds3231.h>
 
 DS3231 rtc;
 DateTime dt;

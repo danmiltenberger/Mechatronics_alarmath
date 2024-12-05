@@ -5,8 +5,8 @@ Home
 */
 
 #include <Wire.h>
-#include <ds3231.h>
- 
+#include <ds3231.h>   // include zip library -> ds3231-master
+
 struct ts t; 
  
 void setup() {
